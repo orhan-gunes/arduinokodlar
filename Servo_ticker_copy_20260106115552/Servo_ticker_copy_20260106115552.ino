@@ -1,19 +1,24 @@
-#include<Servo.h>
-Servo motor;
-void setup() 
-{
-  pinMode(LED_BUILTIN, OUTPUT);
-  motor.attach(0);
-  // put your setup code here, to run once:
+#include <ESP32Servo.h>
 
+#define SERVO_PIN 4
+
+Servo servo;
+
+void setup() {
+  servo.attach(SERVO_PIN);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-motor.write(0);
-digitalWrite(LED_BUILTIN, HIGH); 
-delay(15000);
-motor.write(180);
- digitalWrite(LED_BUILTIN, LOW);
-delay(15000);
+
+  // 0° → 180° (5 saniye)
+  for (int pos = 0; pos <= 180; pos++) {
+    servo.write(pos);
+    delay(5000 / 180);   // ≈27 ms
+  }
+
+  // 180° → 0° (5 saniye)
+  for (int pos = 180; pos >= 0; pos--) {
+    servo.write(pos);
+    delay(5000 / 180);
+  }
 }
